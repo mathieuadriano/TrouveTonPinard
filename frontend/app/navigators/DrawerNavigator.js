@@ -7,6 +7,8 @@ import HomeScreen from '../screens/HomeScreen'
 import TrouverMonPinardScreen from '../screens/TrouverMonPinardScreen'
 import ProfileScreen from '../screens/auth/ProfileScreen';
 import FavoriteScreen from '../screens/FavoriteScreen'
+import NotificationsScreen from '../screens/NotificationsScreen';
+import SettingScreen from '../screens/SettingSreen';
 
 export default function DrawerNavigator() {
 
@@ -31,15 +33,20 @@ export default function DrawerNavigator() {
             options={{
                 headerRight: (props) => <LogoTitle {...props} />,
                 headerStyle: {
-                    backgroundColor: palette.blue
+                    backgroundColor: palette.blue,
+                    height: 110,
                 },
-        }}
+                title: '',
+                headerTintColor: palette.whiteText,
+                
+                
+            }}
         />
         <Drawer.Screen name="Trouver mon Pinard" component={TrouverMonPinardScreen} />
         <Drawer.Screen name="Mon compte" component={ProfileScreen} />
         <Drawer.Screen name="Favoris" component={FavoriteScreen} />
-        <Drawer.Screen name="Notifications" component={ProfileScreen} />
-        <Drawer.Screen name="Paramètres" component={ProfileScreen} />
+        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+        <Drawer.Screen name="Paramètres" component={SettingScreen} />
       </Drawer.Navigator>
     );
   }
@@ -47,8 +54,8 @@ export default function DrawerNavigator() {
   function LogoTitle() {
     return (
       <Image
-        style={{ width: 50, height: 50 }}
-        source={require('../../assets/logo.png')}
+        style={{ width: 40, height: 40 }}
+        source={require('../../assets/logo_square.png')}
       />
     );
   }
