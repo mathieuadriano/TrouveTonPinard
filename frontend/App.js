@@ -10,8 +10,8 @@ import AppNavigator from './app/navigators/AppNavigator';
 export default function App() {
 
   const [fontsLoaded] = useFonts({
-    "Alpha": require("./assets/fonts/BC-Alphapipe.otf"),
-    "Will": require("./assets/fonts/WillRobinson.ttf")
+    "Will": require("./assets/fonts/WillRobinson.ttf"),
+    "Alpha": require("./assets/fonts/BC-Alphapipe.otf")
   });
 
   return (
