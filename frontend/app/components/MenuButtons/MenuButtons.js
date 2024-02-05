@@ -11,22 +11,18 @@ export default function MenuButtons({ navigation }){
     return(
         <View style={styles.MenuContainer}>
             <Pressable 
-                style={styles.button} 
                 onPress={() => navigation.navigate('Cart')}
             >
                 <AntDesign name="shoppingcart" size={24} color={palette.blue} />
             </Pressable>
 
             <Pressable 
-                style={styles.button} 
                 onPress={() => navigation.navigate('Notifications')}
             >
-                <Ionicons name="notifications-outline" size={24}  color={palette.blue} style={styles.icons}/>
+                <Ionicons name="notifications-outline" size={24}  color={palette.blue}/>
             </Pressable>
 
-            {/* Add logic login or register or profile */}
-            <Pressable 
-                style={styles.button} 
+            <Pressable  
                 onPress={() => navigation.navigate('Profile')}
             >
                 <AntDesign name="user" size={24} color={palette.blue} />
@@ -37,7 +33,7 @@ export default function MenuButtons({ navigation }){
 
 const styles = StyleSheet.create({
     MenuContainer: {
-        width: '90%',
+        width: 320,
         height: 75,
 
         borderTopLeftRadius: 50,
