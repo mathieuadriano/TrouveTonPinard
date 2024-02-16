@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react-native-gesture-handler';
 
-import { StyleSheet} from 'react-native';
+import { StyleSheet, View, Text} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 
@@ -14,6 +14,10 @@ export default function App() {
     "Alpha": require("./assets/fonts/BC-Alphapipe.otf")
   });
 
+  if (!fontsLoaded) {
+    return <View><Text>Loading...</Text></View>;
+  }
+  
   return (
     <NavigationContainer>
       <AppNavigator />

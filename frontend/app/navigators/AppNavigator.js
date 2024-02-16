@@ -15,6 +15,7 @@ import DomainScreen from '../../app/screens/content/DomainScreen';
 //Other
 import CartScreen from '../../app/screens/CartScreen';
 import NotificationScreen from '../../app/screens/NotificationsScreen'
+import SettingScreen from '../screens/SettingSreen';
 
 export default function AppNavigator() {
     
@@ -36,9 +37,10 @@ export default function AppNavigator() {
         <Stack.Screen name="Domain" component={DomainScreen} />
 
         {/* Other Screens */}
-        <Stack.Screen name="Cart" component={CartScreen} />
+        <Stack.Screen name="Panier" component={CartScreen} />
         <Stack.Screen name="Notifications" component={NotificationScreen} />
-
+        <Stack.Screen name="Paramètres" component={SettingScreen} />
+        
       </Stack.Navigator>
     );
   }

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, Image } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, Image, Dimensions } from 'react-native';
 import * as Progress from 'react-native-progress';
 import MenuButtons from '../components/MenuButtons/MenuButtons'
 import Slider from '@react-native-community/slider';
 import { palette } from '../theme/Colors';
 import Icon from '../../assets/logo.png';
+
+const { width, height } = Dimensions.get('window');
 
 
 export default function TrouverMonPinard({ navigation }) {
@@ -111,85 +113,91 @@ export default function TrouverMonPinard({ navigation }) {
     const progressPercentage = Math.round(((currentStep - 1) / (totalSteps - 1)) * 100);
 
     return (
-        <ImageBackground
-                source={require('../../assets/vagues1.png')}
-                style={styles.BgWave}
+        <ImageBackground source={require('../../assets/vagues1.png')} style={styles.BgWave}>
+            <View style={styles.container}>
 
-            >
-                <ScrollView style={styles.main} contentContainerStyle={styles.viewMain}>
-                    <TouchableOpacity style={styles.returnArrow} 
-                        onPress={() => {
-                            resetForm();
-                            navigation.goBack();
-                        }}
-                    >
-                        <Image source={require('../../assets/arrow-left.png')} style={styles.arrowIcon} />
-                    </TouchableOpacity>
-                    <View style={styles.form} >
+                {/* Arrow at the top */}
+                <TouchableOpacity style={styles.returnArrow} onPress={() => {
+                    resetForm();
+                    navigation.goBack();
+                }}>
+                    <Image source={require('../../assets/arrow-left.png')} style={styles.arrowIcon} />
+                </TouchableOpacity>
+
+                {/* Scrollable form content in the middle */}
+                <ScrollView style={styles.scrollView}>
+                    <View style={styles.form}>
                         {renderStepContent()}
                         <Progress.Bar progress={(currentStep - 1) / (totalSteps - 1)} width={null} />
                         <Text style={styles.progressText}>{progressPercentage}% Complete</Text>
                     </View>
-                    <View style={styles.menu}>
-                        <MenuButtons />
-                    </View>
-            </ScrollView>
-        </ImageBackground> 
+                </ScrollView>
+
+                {/* Menu at the bottom */}
+                <View style={styles.menu}>
+                    <MenuButtons />
+                </View>
+            </View>
+        </ImageBackground>
     );
 }
 
 const styles = StyleSheet.create({
     BgWave: {
-        flex: 1,
-        resizeMode: 'cover',
-    },
-    main: {
-        height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
     },
-    viewMain:{
-        height: '90%',
-        alignItems: 'flex-start',
-        justifyContent: 'space-between',
+    container: {
+        width: '90%',
+        flex: 1,
+        justifyContent: 'space-around',
+    },
+    returnArrow: {
+        marginTop: 20,
+        marginLeft: 10,
+    },
+    scrollView: {
+        flex: 1,
     },
     form: {
         width: '100%',
-        padding: 20,
-        backgroundColor: '#fff',
         borderRadius: 10,
-        
     },
     menu: {
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        marginBottom: 20
     },
 
     title: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 20,
+        paddingBottom: 20,
         alignSelf: 'center',
+        textAlign: 'center',
         color: palette.pink,
     },
     choiceRow: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        marginBottom: 20,
-    },
-    choiceButton: {
-        width: '45%', // Adjust this percentage as needed
-        height: 100,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f0f0f0',
+        gap: 10,
+    },
+    choiceButton: {
+        width: 130,
+        height: 130,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
         borderRadius: 5,
-        marginVertical: 5, // Adds vertical space between wrapped items
     },
     choiceText: {
         fontSize: 16,
@@ -198,7 +206,6 @@ const styles = StyleSheet.create({
     choiceIcon: {
         width: 50,
         height: 50,
-        marginBottom: 5,
     },
     slider: {
         width: '100%',
@@ -206,7 +213,7 @@ const styles = StyleSheet.create({
     },
     progressText: {
         textAlign: 'center',
-        marginTop: 5,
+        paddingTop: 5,
         fontSize: 16,
     },
     returnArrow: {

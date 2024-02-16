@@ -7,7 +7,7 @@ export default function WeeklyWine() {
     
   const [weekly, setWeeklyWine] = useState({});
 
-  const urlWeeklyWine = "http://10.34.0.109:8000/api/wine/get-weekly-wines/"
+  const urlWeeklyWine = "http://192.168.1.175:8001/api/wine/get-weekly-wines/"
   const fetchProduct = async () => {
     try {
         const res = await fetch(urlWeeklyWine)
@@ -48,7 +48,7 @@ export default function WeeklyWine() {
                             </View>
                             
                             <Text style={styles.WeeklyWinePrice}>
-                                {weekly.price}
+                                {weekly.price} €
                             </Text>
                         </View>
                         <View style={styles.WeeklyWineButtons}>

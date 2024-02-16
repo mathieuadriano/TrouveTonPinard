@@ -25,7 +25,7 @@ export default function WinesList() {
                         <View style={styles.WinesListText}>
                             <Text style={styles.WinesListTitle}>Vinest Gold Blanc 750 ml</Text>
                             <Stars nb={4} />
-                            <Text style={styles.WinesListPrice}>12 $</Text>
+                            <Text style={styles.WinesListPrice}>12 €</Text>
                             <View>
                                 <Text style={styles.WinesListProductPage}>Voir la fiche produit</Text>
                             </View>
@@ -48,7 +48,7 @@ export default function WinesList() {
                         <View style={styles.WinesListText}>
                             <Text style={styles.WinesListTitle}>Vinest Gold Blanc 750 ml</Text>
                             <Stars nb={4} />
-                            <Text style={styles.WinesListPrice}>12 $</Text>
+                            <Text style={styles.WinesListPrice}>12 €</Text>
                             <View>
                                 <Text style={styles.WinesListProductPage}>Voir la fiche produit</Text>
                             </View>
@@ -71,7 +71,7 @@ export default function WinesList() {
                         <View style={styles.WinesListText}>
                             <Text style={styles.WinesListTitle}>Vinest Gold Blanc 750 ml</Text>
                             <Stars nb={4} />
-                            <Text style={styles.WinesListPrice}>12 $</Text>
+                            <Text style={styles.WinesListPrice}>12 €</Text>
                             <View>
                                 <Text style={styles.WinesListProductPage}>Voir la fiche produit</Text>
                             </View>
