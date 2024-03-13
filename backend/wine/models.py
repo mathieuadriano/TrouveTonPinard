@@ -6,26 +6,28 @@ from winery.models import *
 
 # Create your models here.
 class Wine(models.Model):
-    OPTION1 = 'Blanc'
-    OPTION2 = 'Rouge'
-    OPTION3 = 'Rosé'
-    OPTION4 = 'Pétillant'
+    TYPE1 = 'Blanc'
+    TYPE2 = 'Rouge'
+    TYPE3 = 'Rosé'
 
-    YOUR_CHOICES = [
-        (OPTION1, 'Blanc'),
-        (OPTION2, 'Rouge'),
-        (OPTION3, 'Rosé'),
-        (OPTION4, 'Pétillant'),
+    YOUR_TYPES = [
+        (TYPE1, 'Blanc'),
+        (TYPE2, 'Rouge'),
+        (TYPE3, 'Rosé'),    
     ]
 
     winery = models.ForeignKey(Winery, on_delete=models.CASCADE, null=False, blank=False)
     name = models.CharField(max_length=50, null=False, blank=False)
     type = models.CharField(
         max_length=20,
-        choices=YOUR_CHOICES,
-        default=OPTION1,  # Set a default value if needed
+        choices=YOUR_TYPES,
+        default=TYPE1,  # Set a default value if needed
     )
-    price = models.DecimalField(max_digits=7, decimal_places=2, null=False, blank=False)
+    repas = models.CharField(max_length=50, null=False, blank=False)
+    plat = models.CharField(max_length=50, null=False, blank=False)
+    accompagnement = models.CharField(max_length=50, null=False, blank=False)
+    niveau = models.CharField(max_length=50, null=False, blank=False)
+    prix = models.DecimalField(max_digits=7, decimal_places=2, null=False, blank=False)
     alcool_degree = models.DecimalField(max_digits=7, decimal_places=2, null=False, blank=False)
     creation_year = models.CharField(max_length=50, null=False, blank=False)
     volume = models.CharField(max_length=50, null=False, blank=False)
