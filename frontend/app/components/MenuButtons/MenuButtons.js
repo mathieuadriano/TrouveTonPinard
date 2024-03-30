@@ -11,7 +11,7 @@ export default function MenuButtons({ navigation }){
     return(
         <View style={styles.MenuContainer}>
             <Pressable 
-                onPress={() => navigation.navigate('Cart')}
+                onPress={() => navigation.navigate('Panier')}
             >
                 <AntDesign name="shoppingcart" size={24} color={palette.blue} />
             </Pressable>

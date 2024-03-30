@@ -1,27 +1,46 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, Image, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, Image, Dimensions, ActivityIndicator } from 'react-native';
 import * as Progress from 'react-native-progress';
 import MenuButtons from '../components/MenuButtons/MenuButtons'
 import Slider from '@react-native-community/slider';
+import Stars from '../components/utils/Stars';
+import { Ionicons } from '@expo/vector-icons'; 
 import { palette } from '../theme/Colors';
+
 import Icon from '../../assets/logo.png';
+
+import dejeuner from '../../assets/icons/dejeuner.png';
+import apero from '../../assets/icons/apero.png';
+import diner from '../../assets/icons/diner.png';
+
+import plat from '../../assets/icons/dejeuner.png';
+import vianderouge from '../../assets/icons/vianderouge.png';
+import viandeblanche from '../../assets/icons/viandeblanche.png';
+import poisson from '../../assets/icons/poisson.png';
+import coquillage from '../../assets/icons/coquillage.png';
+import crustrace from '../../assets/icons/crustrace.png';
+import fromage from '../../assets/icons/fromage.png';
+import dessertfruite from '../../assets/icons/dejeuner.png';
+import dessertsucree from '../../assets/icons/dejeuner.png';
 
 const { width, height } = Dimensions.get('window');
 
 
 export default function TrouverMonPinard({ navigation }) {
-    const totalSteps = 6;
+    const totalSteps = 7;
     const initialSelections = {};
     const initialBudget = 50;
 
     const [currentStep, setCurrentStep] = useState(1);
     const [selections, setSelections] = useState(initialSelections);
     const [budget, setBudget] = useState(initialBudget);
+    const [isLoading, setIsLoading] = useState(false);
 
     const resetForm = () => {
         setCurrentStep(1);
         setSelections(initialSelections);
         setBudget(initialBudget);
+        setIsLoading(false);
     };
 
     const handleOptionSelect = (option) => {
@@ -29,21 +48,29 @@ export default function TrouverMonPinard({ navigation }) {
         if (currentStep < totalSteps) {
             setCurrentStep(currentStep + 1);
         }
+        if (currentStep === totalSteps - 1) {
+            setIsLoading(true);
+            setTimeout(() => {
+                setIsLoading(false);
+                // Transition to the final empty return after loading
+                setCurrentStep(currentStep + 1);
+            }, 2000); // Loading animation for 2 seconds
+        }
     };
 
     const choiceIcons = {
-        "Le déjeuner": Icon,
-        "l'apéro": Icon,
-        "le diner": Icon,
-        "Plat en sauce": Icon, 
-        "viande rouge": Icon, 
-        "viande blanche": Icon, 
-        "poisson": Icon, 
-        "fromage": Icon, 
-        "dessert sucré": Icon, 
-        "dessert fruité": Icon,
-        "charcuterie": Icon, 
-        "fromage": Icon,
+        "Le déjeuner": dejeuner,
+        "l'apéro": apero,
+        "le diner": diner,
+        "Plat en sauce": dejeuner, 
+        "viande rouge": vianderouge, 
+        "viande blanche": viandeblanche, 
+        "poisson": poisson, 
+        "fromage": fromage, 
+        "dessert sucré": dessertsucree, 
+        "dessert fruité": dessertfruite,
+        "charcuterie": apero, 
+        "fromage": fromage,
         "crudité": Icon,
         "gateaux apéro": Icon,
         "repas frais": Icon,
@@ -58,6 +85,9 @@ export default function TrouverMonPinard({ navigation }) {
     };
 
     const renderStepContent = () => {
+        if (isLoading) {
+            return <ActivityIndicator size="large" color={palette.pink} />;
+        }
         switch (currentStep) {
             case 1:
                 return renderChoices("C'est pour ...", ["Le déjeuner", "l'apéro", "le diner"]);
@@ -71,11 +101,39 @@ export default function TrouverMonPinard({ navigation }) {
                 return renderChoices("On a trouvé quoi te conseiller mais tu préfères quel type de vin", ["vin pétillant", "vin blanc", "vin rouge", "rosé"]);
             case 6:
                 return renderSlider();
+            case 7:
+                return result();
             default:
                 return <Text>Unknown step</Text>;
         }
     };
 
+    const result = () => (
+
+        <View>
+            <ImageBackground source={require('../../assets/background1.png')} style={styles.backgroundImage}>
+            <Image style={styles.WinesListImg} source={require('../../assets/test.png')}/>
+            <View style={styles.WinesListData}>
+                <View style={styles.WinesListText}>
+                    <Text style={styles.WinesListTitle}>Clos de Vougeot 750 ml</Text>
+                    <Stars nb={4} />
+                    <Text style={styles.WinesListPrice}>20 €</Text>
+                    <View>
+                        <Text style={styles.WinesListProductPage}>Voir la fiche produit</Text>
+                    </View>
+                </View>
+            
+            </View>
+            <View style={styles.WinesListIcons}>     
+                <Ionicons name="heart" size={20}  color={palette.pink}/>
+                <View style={styles.iconCart}>
+                    <Ionicons name="cart" size={20}  color={palette.whiteText}/>
+                </View>
+            </View>
+        </ImageBackground>
+        </View>
+        
+    )
     const renderChoices = (title, choices) => (
         <View>
             <Text style={styles.title}>{title}</Text>
@@ -104,9 +162,14 @@ export default function TrouverMonPinard({ navigation }) {
                 step={1}
                 value={budget}
                 onValueChange={setBudget}
-                onSlidingComplete={() => handleOptionSelect(budget)}
             />
             <Text>Budget: {budget}€</Text>
+            <TouchableOpacity
+                style={styles.confirmButton}
+                onPress={() => handleOptionSelect(budget)}
+            >
+                <Text style={styles.confirmButtonText}>Confirm</Text>
+            </TouchableOpacity>
         </View>
     );
 
@@ -128,14 +191,18 @@ export default function TrouverMonPinard({ navigation }) {
                 <ScrollView style={styles.scrollView}>
                     <View style={styles.form}>
                         {renderStepContent()}
-                        <Progress.Bar progress={(currentStep - 1) / (totalSteps - 1)} width={null} />
-                        <Text style={styles.progressText}>{progressPercentage}% Complete</Text>
+                        {currentStep < totalSteps && (
+                            <>
+                                <Progress.Bar progress={(currentStep - 1) / (totalSteps - 1)} width={null} />
+                                <Text style={styles.progressText}>{progressPercentage}% Complete</Text>
+                            </>
+                        )}
                     </View>
                 </ScrollView>
 
                 {/* Menu at the bottom */}
                 <View style={styles.menu}>
-                    <MenuButtons />
+                    <MenuButtons navigation={navigation}/>
                 </View>
             </View>
         </ImageBackground>
@@ -204,8 +271,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     choiceIcon: {
-        width: 50,
-        height: 50,
+        width: 30,
+        height: 30,
     },
     slider: {
         width: '100%',
@@ -222,5 +289,79 @@ const styles = StyleSheet.create({
     arrowIcon: {
         width: 25,
         height: 25,
+    },
+    confirmButton: {
+        marginTop: 20,
+        backgroundColor: palette.blue,
+        padding: 10,
+        borderRadius: 5,
+        alignSelf: 'center',
+    },
+    confirmButtonText: {
+        color: '#fff',
+        fontSize: 18,
+    },
+
+    backgroundImage:{
+        flex: 1,
+        resizeMode: 'contain',
+        overflow: 'hidden',
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: 'center',
+        gap: 10,
+        borderRadius: 20,
+        padding: 5,
+        marginVertical: 15
+    },
+    WinesListImg: {
+        width: '15%',
+        height: 130
+    },
+    WinesListData: {
+        width: 180,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: 'center'
+    },
+    WinesListText: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between"
+    },
+    WinesListTitle: {
+        color: palette.blue,
+        fontFamily: "Alpha",
+        fontSize: 14,
+        letterSpacing: 1,
+        fontWeight: "bold",
+    },
+    WinesListPrice: {
+        color: palette.blue,
+        fontSize: 14,
+        letterSpacing: 1,
+        fontWeight: "bold",
+    },
+    WinesListProductPage: {
+        textAlign: 'center',
+        color: palette.whiteText
+    },
+    WinesListIcons: {
+        width: '10%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    iconCart:{
+        width: 30,
+        height: 30,
+        backgroundColor: palette.blue,
+        borderRadius: 100,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 });

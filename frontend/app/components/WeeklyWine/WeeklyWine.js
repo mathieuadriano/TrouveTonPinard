@@ -7,13 +7,12 @@ export default function WeeklyWine() {
     
   const [weekly, setWeeklyWine] = useState({});
 
-  const urlWeeklyWine = "http://192.168.1.175:8001/api/wine/get-weekly-wines/"
+  const urlWeeklyWine = "http://172.20.10.2:8001/api/winery/get-wineries/"
   const fetchProduct = async () => {
     try {
         const res = await fetch(urlWeeklyWine)
         const data = await res.json()
-        console.log(data[0])
-        console.log(data[0].winery.name)
+        console.log(data)
         setWeeklyWine(data[0])
     } catch (error) {
         console.log("error fetch", error)
@@ -34,7 +33,7 @@ export default function WeeklyWine() {
                 <View style={styles.WeeklyWineContent}>
                     <Image 
                         style={styles.WeeklyWineImg}
-                        source={{uri: `http://10.34.0.109:8000/${weekly.image}`}}
+                        source={{uri: `http://172.20.10.2:8001/${weekly.image}`}}
                     />
                     <View style={styles.WeeklyWineDesc}>
                         <View style={styles.WeeklyWineDescText}>
@@ -52,8 +51,8 @@ export default function WeeklyWine() {
                             </Text>
                         </View>
                         <View style={styles.WeeklyWineButtons}>
-                            <TouchableOpacity style={styles.WeeklyWineButton}><Text>Voir la fiche produit</Text></TouchableOpacity>
-                            <TouchableOpacity style={styles.WeeklyWineButton}><Text>Voir le domaine</Text></TouchableOpacity>
+                            <TouchableOpacity style={styles.WeeklyWineButton}><Text style={styles.txtbuttons}>Voir la fiche produit</Text></TouchableOpacity>
+                            <TouchableOpacity style={styles.WeeklyWineButton}><Text style={styles.txtbuttons}>Voir le domaine</Text></TouchableOpacity>
                         </View>
                     </View>
                 </View>
@@ -156,5 +155,15 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
 
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    txtbuttons: {
+        color: palette.whiteText,
+        textAlign: 'center',
+        fontFamily: 'Alpha',
+        fontSize: 10
     }
 });

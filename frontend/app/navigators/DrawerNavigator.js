@@ -36,7 +36,7 @@ export default function DrawerNavigator() {
                     backgroundColor: palette.blue,
                     height: 110,
                 },
-                title: '',
+                title: 'Accueil',
                 headerTintColor: palette.whiteText,
                 
                 
@@ -45,7 +45,7 @@ export default function DrawerNavigator() {
         <Drawer.Screen name="Trouver mon Pinard" component={TrouverMonPinardScreen} />
         <Drawer.Screen name="Mon compte" component={ProfileScreen} />
         <Drawer.Screen name="Favoris" component={FavoriteScreen} />
-        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+        {/*<Drawer.Screen name="Notifications" component={NotificationsScreen} />*/}
         <Drawer.Screen name="Paramètres" component={SettingScreen} />
       </Drawer.Navigator>
     );
