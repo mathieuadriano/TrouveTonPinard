@@ -7,7 +7,7 @@ export default function WeeklyWine() {
     
   const [weekly, setWeeklyWine] = useState({});
 
-  const urlWeeklyWine = "http://172.20.10.2:8001/api/winery/get-wineries/"
+  const urlWeeklyWine = "http://10.34.0.109:8001/api/wine/get-weekly-wines/"
   const fetchProduct = async () => {
     try {
         const res = await fetch(urlWeeklyWine)
@@ -33,7 +33,7 @@ export default function WeeklyWine() {
                 <View style={styles.WeeklyWineContent}>
                     <Image 
                         style={styles.WeeklyWineImg}
-                        source={{uri: `http://172.20.10.2:8001/${weekly.image}`}}
+                        source={{uri: `http://10.34.0.109:8001/${weekly.image}`}}
                     />
                     <View style={styles.WeeklyWineDesc}>
                         <View style={styles.WeeklyWineDescText}>

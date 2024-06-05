@@ -33,7 +33,13 @@ export default function AppNavigator() {
         <Stack.Screen name="Profile" component={ProfileScreen} />
   
         {/* Content Screens */}
-        <Stack.Screen name="Wine" component={WineScreen} />
+        <Stack.Screen name="Wine" component={WineScreen} options={{
+            title: 'Fiche produit',
+            headerStyle: {
+              backgroundColor: 'red',
+            },
+          }}
+        />
         <Stack.Screen name="Domain" component={DomainScreen} />
 
         {/* Other Screens */}

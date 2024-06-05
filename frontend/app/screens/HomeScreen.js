@@ -9,8 +9,15 @@ import WeeklyWine from '../components/WeeklyWine/WeeklyWine';
 import MenuButtons from '../components/MenuButtons/MenuButtons';
 import WinesList from '../components/Wines/WinesList';
 import { palette } from '../theme/Colors';
-
+import useData from '../api/hook/useData';
+import useDataStore from '../api/store/useDataStore';
 export default function HomeScreen({ navigation }){
+    useData()
+    const data = useDataStore()
+    console.log('wines : ')
+    console.log(data.wines)
+    console.log('winery :')
+    console.log(data.wineries)
 
     const navigateToTrouverMonPinardScreen = () => {
         navigation.navigate('Trouver mon Pinard');
@@ -48,7 +55,7 @@ export default function HomeScreen({ navigation }){
                 </View>
                 <View style={styles.Section2}>
                     <View style={styles.section2_container}>
-                        <WinesList/>
+                        <WinesList data={data.wines}/>
                         <WeeklyWine />
                         <MenuButtons navigation={navigation} />
                     </View>

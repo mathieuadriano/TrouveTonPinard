@@ -1,17 +1,22 @@
 import React from "react";
-import { Text, View, Image, StyleSheet, ImageBackground } from "react-native";
+import { Text, View, Image, StyleSheet, ImageBackground, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons } from '@expo/vector-icons';
 import { palette } from "../../theme/Colors";
 import Stars from '../utils/Stars'
+import WineScreen from "../../screens/content/WineScreen";
+import { useNavigation } from '@react-navigation/native';
 
-const winesData = [
-    { id: '1', name: 'Clos de Vougeot', volume: '750 ml', price: '20 €', rating: 2, type: 'ROUGE' },
-    { id: '2', name: 'Château Rothschild', volume: '750 ml', price: '50 €', rating: 2, type: 'BLANC' },
-    { id: '3', name: 'Montrachet Grand Cru', volume: '500 ml', price: '50 €', rating: 3, type: 'BLANC' },
-  ];
-export default function WinesList() {
-      
+
+export default function WinesList({data}) {
+    const navigation = useNavigation();
+
+    const winesData = data
+    console.log(winesData)
+    const handleNavigateToWineScreen = () => {
+        navigation.navigate('Wine', { wine: winesData[0] });
+    };
+    
     return (
         <View style={styles.scrollViewContainer}>
             <ScrollView horizontal={true} 
@@ -26,9 +31,11 @@ export default function WinesList() {
                             <Text style={styles.WinesListTitle}>Clos de Vougeot 750 ml</Text>
                             <Stars nb={4} />
                             <Text style={styles.WinesListPrice}>20 €</Text>
-                            <View>
-                                <Text style={styles.WinesListProductPage}>Voir la fiche produit</Text>
-                            </View>
+                            <TouchableOpacity onPress={handleNavigateToWineScreen}>
+                                <View>
+                                    <Text style={styles.WinesListProductPage}>Voir la fiche produit</Text>
+                                </View>
+                            </TouchableOpacity>
                         </View>
                         
                     </View>
